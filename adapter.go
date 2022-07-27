@@ -423,6 +423,10 @@ func (a *Adapter) UpdateFilteredPolicies(sec string, ptype string, newPolicies [
 	return nil, fmt.Errorf("not implemented")
 }
 
+func (a *Adapter) Stats() *pgxpool.Stat {
+	return a.pool.Stat()
+}
+
 func (a *Adapter) Close() {
 	if a != nil && a.pool != nil {
 		a.pool.Close()
