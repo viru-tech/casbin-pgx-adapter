@@ -243,16 +243,6 @@ func (a *Adapter) AddPolicies(sec string, ptype string, rules [][]string) error 
 	})
 }
 
-// RemovePolicy removes a policy rule from the storage.
-func (a *Adapter) RemovePolicy(sec string, ptype string, rule []string) error {
-	ctx, cancel := context.WithTimeout(context.Background(), a.timeout)
-	defer cancel()
-
-	query, args := a.deletePolicyStmt(ptype, rule)
-	_, err := a.pool.Exec(ctx, query, args...)
-	return err
-}
-
 func (a *Adapter) deletePolicyStmt(ptype string, rule []string) (string, []interface{}) {
 	var sb strings.Builder
 	sb.WriteString(fmt.Sprintf("DELETE FROM %s WHERE p_type = $1", a.schemaTable()))
@@ -266,6 +256,16 @@ func (a *Adapter) deletePolicyStmt(ptype string, rule []string) (string, []inter
 	}
 
 	return sb.String(), args
+}
+
+// RemovePolicy removes a policy rule from the storage.
+func (a *Adapter) RemovePolicy(sec string, ptype string, rule []string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), a.timeout)
+	defer cancel()
+
+	query, args := a.deletePolicyStmt(ptype, rule)
+	_, err := a.pool.Exec(ctx, query, args...)
+	return err
 }
 
 // RemovePolicies removes policy rules from the storage.
