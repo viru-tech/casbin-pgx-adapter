@@ -1,11 +1,10 @@
-module github.com/pckhoi/casbin-pgx-adapter/v3
+module github.com/viru-tech/casbin-pgx-adapter/v3
 
-go 1.18
+go 1.24
 
 require (
 	github.com/casbin/casbin/v2 v2.98.0
 	github.com/jackc/pgx/v5 v5.6.0
-	github.com/mmcloughlin/meow v0.0.0-20200201185800-3501c7c05d21
 	github.com/stretchr/testify v1.9.0
 )
 
